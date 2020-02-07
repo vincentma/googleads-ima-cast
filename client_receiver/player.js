@@ -57,7 +57,11 @@ Player.prototype.setupCallbacks_ = function() {
       case 'requestAd':
         let adTag = message[1];
         let currentTime = parseFloat(message[2]);
-        self.requestAd_(adTag, currentTime);
+        let url = new URL(adTag)
+        url.searchParams.set('rdid', '%%ADVERTISING_IDENTIFIER_PLAIN%%');
+        url.searchParams.set('is_lat', '1');
+        url.searchParams.set('idtype', 'adid');
+        self.requestAd_(url.href, currentTime);
         break;
       case 'seek':
         let time = parseFloat(message[1]);
